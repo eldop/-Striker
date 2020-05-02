@@ -5,7 +5,7 @@ import classGame
 game = classGame.Game()
 
 
-time.set_timer(USEREVENT, 3000)
+time.set_timer(USEREVENT, 4444)
 
 while not game.over:
     for e in event.get():

@@ -14,9 +14,9 @@ while not game.over:
         if e.type == USEREVENT:
             game.spawnenemy()
         if e.type == MOUSEBUTTONUP:
-
             if e.button == 3:
-                game.spawnturel(e.pos)
+                #game.spawnturel(e.pos)
+                game.showmenu(e.pos)
             if e.button == 1:
                 game.shootall(e.pos)
     game.update()

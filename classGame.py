@@ -1,4 +1,4 @@
-import pygame, classTurel, classEnemies, classBullet
+import pygame, classTurel, classEnemies, classBullet, classMenu
 pygame.init()
 
 
@@ -16,6 +16,7 @@ class Game():
 
         self.enemygroup = pygame.sprite.LayeredUpdates()
         self.turelgroup = pygame.sprite.LayeredUpdates()
+        self.menugroup = pygame.sprite.LayeredUpdates()
 
         self.over = False
         self.display = pygame.display.set_mode((1280, 720))
@@ -27,15 +28,19 @@ class Game():
 
         self.money = 500
 
+
+
     def update(self):
         self.clock.tick(self.FPS)
         self.display.fill((255, 180, 10))
         self.kvadratiki()
         self.turelgroup.update()
         self.enemygroup.update()
+        self.menugroup.update()
         self.bullets.update()
         self.turelgroup.draw(self.display)
         self.enemygroup.draw(self.display)
+        self.menugroup.draw(self.display)
 
         self.bullets.draw(self.display)
         self.checkaim()
@@ -64,8 +69,7 @@ class Game():
                 else:
                     pygame.draw.rect(self.display, (255,190,0), (dx, dy, 80, 80))
 
-    def shoot(self, pos):
-        self.bullets.add(classBullet.Bullet(self.rect.center, pos))
+
 
     def shootall(self, pos):
         for turel in self.turelgroup:
@@ -73,10 +77,22 @@ class Game():
             self.bullets.add(b)
 
     def checkaim(self):
-
         for enemy in pygame.sprite.groupcollide(self.enemygroup, self.bullets, False, True):
             enemy.damage()
             self.money += 1
+
+    def showmenu(self, pos):
+        if len(self.menugroup.get_sprites_at(pos)) == 0:
+            for i in self.menugroup.sprites():
+                i.kill()
+
+
+            self.menu = classMenu.Menu(pos)
+            self.menugroup.add(self.menu)
+        else:
+            self.spawnturel(pos)
+            for i in self.menugroup.sprites():
+                i.kill()
 
 
 

@@ -1,4 +1,4 @@
-import pygame, random, classBullet
+import pygame, random, math
 
 class Turel(pygame.sprite.Sprite):
     def __init__(self, pos):
@@ -15,11 +15,13 @@ class Turel(pygame.sprite.Sprite):
         self.rect = self.normalrect
 
     def update(self):
-        self.angle += 1
+       # self.angle += 1
         self.rotate()
 
 
     def rotate(self):
+        mpos = pygame.mouse.get_pos()
+        self.angle = 0
         self.image = pygame.transform.rotate(self.normalimage, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.normalrect.center

@@ -52,8 +52,9 @@ class Game():
 
     def spawnturel(self, pos):
         if self.money >= 100:
-            self.turelgroup.add(classTurel.Turel(pos))
-            self.money -= 100
+            if len(self.turelgroup.get_sprites_at(pos)) == 0:
+                self.turelgroup.add(classTurel.Turel(pos))
+                self.money -= 100
 
     def kvadratiki(self):
         for dx in range(0, 1280, 160):
@@ -75,7 +76,7 @@ class Game():
 
         for enemy in pygame.sprite.groupcollide(self.enemygroup, self.bullets, False, True):
             enemy.damage()
-            self.money += 5
+            self.money += 1
 
 
 

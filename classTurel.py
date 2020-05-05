@@ -8,7 +8,8 @@ class Turel(pygame.sprite.Sprite):
         self.normalimage = pygame.transform.scale(self.normalimage, (80, 80))
         self.normalimage.set_colorkey((255,255,255))
         self.normalrect = self.normalimage.get_rect()
-        self.normalrect.center = pos
+        self.normalrect.centerx = ((pos[0] // 80) * 80) + 40
+        self.normalrect.centery = ((pos[1] // 80) * 80) + 40
         self.angle = 0
         self.image = self.normalimage
         self.rect = self.normalrect
@@ -16,7 +17,6 @@ class Turel(pygame.sprite.Sprite):
     def update(self):
         self.angle += 1
         self.rotate()
-
 
 
     def rotate(self):

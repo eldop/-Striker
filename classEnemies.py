@@ -29,14 +29,14 @@ class Enemies(pygame.sprite.Sprite):
     def update(self):
         self.run()
 
-        if self.health <= 0:
+        if self.health <= 0 or self.rect.left > 1281:#добавить self.alive и убивать классгейм + деньши за килл
             self.kill()
 
     def run(self):
         self.rect.x += self.speed
 
-    def damage(self):
-        self.health -= 5
+    def damage(self, damage):
+        self.health -= damage
         if self.health > 500:
             self.color = GREEN
         elif 250 < self.health < 500:

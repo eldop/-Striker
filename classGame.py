@@ -55,10 +55,15 @@ class Game():
 
 
 
-    def spawnturel(self, pos):
+    def spawnturel(self, pos, numberofturel):
         if self.money >= 100:
             if len(self.turelgroup.get_sprites_at(pos)) == 0:
-                self.turelgroup.add(classTurel.Turel(pos))
+                if numberofturel == 1:
+                    self.turelgroup.add(classTurel.BasicTurel(pos))
+                if numberofturel == 2:
+                    self.turelgroup.add(classTurel.HeavyTurel(pos))
+                if numberofturel == 3:
+                    self.turelgroup.add(classTurel.SpeedyTurel(pos))
                 self.money -= 100
 
     def kvadratiki(self):
@@ -73,15 +78,22 @@ class Game():
 
     def shootall(self, pos):
         for turel in self.turelgroup:
-            b = classBullet.Bullet(turel.rect.center, pos)
+            b = classBullet.Bullet(turel.rect.center, pos, turel.damage, turel.bulletspeed)
             self.bullets.add(b)
 
     def checkaim(self):
-        for enemy in pygame.sprite.groupcollide(self.enemygroup, self.bullets, False, True):
-            enemy.damage()
+        collision = pygame.sprite.groupcollide(self.enemygroup, self.bullets, False, True)
+
+        for enemy in collision:
+            for bullet in collision[enemy]:
+                enemy.damage(bullet.damage)
+            #damage = collision[enemy].damage
+
+
             self.money += 1
 
     def showmenu(self, pos):
+        #не попали в меню
         if len(self.menugroup.get_sprites_at(pos)) == 0:
             for i in self.menugroup.sprites():
                 i.kill()
@@ -89,8 +101,13 @@ class Game():
 
             self.menu = classMenu.Menu(pos)
             self.menugroup.add(self.menu)
+
+        #попали в меню
         else:
-            self.spawnturel(pos)
+            numberofturel = self.menu.turelchoice(pos)
+
+
+            self.spawnturel(self.menu.rect.center, numberofturel)
             for i in self.menugroup.sprites():
                 i.kill()
 

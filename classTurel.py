@@ -20,11 +20,43 @@ class Turel(pygame.sprite.Sprite):
 
 
     def rotate(self):
-        mpos = pygame.mouse.get_pos()
-        self.angle = 0
+        mposx, mposy = pygame.mouse.get_pos()
+        dx = mposx - self.normalrect.centerx
+        dy = mposy - self.normalrect.centery
+        rangel = math.atan2(-dy, dx)
+        self.angle = math.degrees(rangel)
+        #self.angle = 0
         self.image = pygame.transform.rotate(self.normalimage, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.normalrect.center
+
+
+class BasicTurel(Turel):
+    def __init__(self, pos):
+        Turel.__init__(self, pos)
+        self.normalimage = pygame.image.load('turel1.png')
+        self.normalimage = pygame.transform.scale(self.normalimage, (80, 80))
+        self.normalimage.set_colorkey((255, 255, 255))
+        self.damage = 10
+        self.bulletspeed = 10
+
+class HeavyTurel(Turel):
+    def __init__(self, pos):
+        Turel.__init__(self, pos)
+        self.normalimage = pygame.image.load('turel2.png')
+        self.normalimage = pygame.transform.scale(self.normalimage, (80, 80))
+        self.normalimage.set_colorkey((255,255,255))
+        self.damage = 25
+        self.bulletspeed = 3
+
+class SpeedyTurel(Turel):
+    def __init__(self, pos):
+        Turel.__init__(self, pos)
+        self.normalimage = pygame.image.load('turel3.png')
+        self.normalimage = pygame.transform.scale(self.normalimage, (80, 80))
+        self.normalimage.set_colorkey((255, 255, 255))
+        self.damage = 5
+        self.bulletspeed = 20
 
 
 

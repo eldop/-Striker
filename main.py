@@ -6,9 +6,10 @@ game = classGame.Game()
 
 
 time.set_timer(USEREVENT, 4444)
-
+time.set_timer(USEREVENT + 1, 44440)
 while not game.over:
     for e in event.get():
+        print(e.type)
         if e.type == QUIT:
             game.over = True
         if e.type == USEREVENT:
@@ -19,4 +20,7 @@ while not game.over:
                 game.showmenu(e.pos)
             if e.button == 1:
                 game.shootall(e.pos)
+        if e.type == (USEREVENT + 1):
+                print('oda')
+                game.spawnModernEnemy()
     game.update()

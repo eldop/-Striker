@@ -5,14 +5,14 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 
-
+loadimages = pygame.image.load('enemysheet.png')
 class Enemies(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.font = pygame.font.SysFont('Algerian', 40)
-        self.loadimages = pygame.image.load('enemysheet.png')
+
         self.color = GREEN
-        self.loadimage = self.loadimages.subsurface((0, 0, 125, 125))
+        self.loadimage = loadimages.subsurface((0, 0, 125, 125))
         self.rect = self.loadimage.get_rect()
         self.loadimage = pygame.transform.rotate(self.loadimage, -90)
         self.rect.x = -200
@@ -47,4 +47,13 @@ class Enemies(pygame.sprite.Sprite):
         self.texthealth = self.font.render(str(self.health), 1, self.color)
         self.image.blit(self.texthealth, (0, 0))
 
-
+class ModernEnemy(Enemies):
+    def __init__(self):
+        Enemies.__init__(self)
+        self.loadimage = loadimages.subsurface((325, 0, 125, 125))
+        self.loadimage = pygame.transform.rotate(self.loadimage, -90)
+        self.health = 10000
+        self.texthealth = self.font.render(str(self.health), 1, self.color)
+        self.image = self.loadimage.copy()
+        self.image.blit(self.texthealth, (0, 0))
+        self.rect.y += 130

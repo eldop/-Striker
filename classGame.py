@@ -2,7 +2,6 @@ import pygame, classTurel, classEnemies, classBullet, classMenu
 pygame.init()
 
 
-
 class Game():
     def __init__(self):
         self.font = pygame.font.SysFont('Algerian', 40)
@@ -41,7 +40,6 @@ class Game():
         self.turelgroup.draw(self.display)
         self.enemygroup.draw(self.display)
         self.menugroup.draw(self.display)
-
         self.bullets.draw(self.display)
         self.checkaim()
         self.textmoney = self.font.render(str(self.money), 1, (0,0,0))
@@ -111,5 +109,7 @@ class Game():
             for i in self.menugroup.sprites():
                 i.kill()
 
+    def spawnModernEnemy(self):
+        self.enemygroup.add(classEnemies.ModernEnemy())
 
 

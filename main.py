@@ -7,6 +7,8 @@ game = classGame.Game()
 
 time.set_timer(USEREVENT, 4444)
 time.set_timer(USEREVENT + 1, 44440)
+
+
 while not game.over:
     for e in event.get():
         print(e.type)

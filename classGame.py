@@ -33,7 +33,7 @@ class Game():
         self.clock.tick(self.FPS)
         self.display.fill((255, 180, 10))
         self.kvadratiki()
-        self.turelgroup.update()
+        self.turelgroup.update(self.display)
         self.enemygroup.update()
         self.menugroup.update()
         self.bullets.update()
@@ -62,6 +62,9 @@ class Game():
                     self.turelgroup.add(classTurel.HeavyTurel(pos))
                 if numberofturel == 3:
                     self.turelgroup.add(classTurel.SpeedyTurel(pos))
+                if numberofturel == 4 and self.money >= 500:
+                    self.turelgroup.add(classTurel.RainbowTurel(pos))
+                    self.money -= 400
                 self.money -= 100
 
     def kvadratiki(self):
@@ -76,8 +79,7 @@ class Game():
 
     def shootall(self, pos):
         for turel in self.turelgroup:
-            b = classBullet.Bullet(turel.rect.center, pos, turel.damage, turel.bulletspeed)
-            self.bullets.add(b)
+            turel.shoot(pos)
 
     def checkaim(self):
         collision = pygame.sprite.groupcollide(self.enemygroup, self.bullets, False, True)
